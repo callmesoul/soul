@@ -157,15 +157,11 @@ export default {
       this.$store.commit('setMusics', { musics: musics })
     }
     this.$store.commit('setPlayer', { player: this.$refs['main-audio'] })
-    this.player = this.$refs['main-audio']
-    const audio = new Audio(
-      'audio/https://api.bzqll.com/music/netease/url?id=29004400&key=579621905'
-    )
-    debugger
-    audio.play()
     const index = this.$store.state.musicPlayIndex
-    this.player.src = this.$store.state.musics[index].url
-    this.player.play()
+    if (this.$store.state.musics[index]) {
+      this.$store.state.player.src = this.$store.state.musics[index].url
+      this.$store.state.player.play()
+    }
   }
 }
 </script>
