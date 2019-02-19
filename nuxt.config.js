@@ -1,4 +1,11 @@
-const pkg = require('./package')
+const GhostContentAPI = require('@tryghost/content-api')
+const pkg = require('./package');
+
+const ghost = new GhostContentAPI({
+  host: 'https://blog.callmesoul.cn',
+  key: '19ba2d8ac5444b614084c49e6c',
+  version: 'v2'
+})
 
 module.exports = {
   mode: 'spa',
@@ -16,6 +23,7 @@ module.exports = {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
+  ghost: ghost,
   /*
   ** Customize the progress-bar color
   */
@@ -29,7 +37,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [],
+  plugins: ['~/plugins/axios.js', '~/plugins/ctx-ghost.js', '~/plugins/scroller.js'],
 
   /*
   ** Nuxt.js modules
@@ -42,6 +50,8 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
+    baseURL: 'https://blog.callmesoul.cn/ghost/api/v2/content',
+    https: true
     // See https://github.com/nuxt-community/axios-module#options
   },
 

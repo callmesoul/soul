@@ -5,91 +5,74 @@
       <!--<span>首页</span>-->
       <!--</div>-->
       <div class="box-content">
-        <ul>
-          <li>
-            <a href="">
-              <!--<div class="image"><img data-src="{{feature_image}}" src="{{feature_image}}"></div>-->
+        <vuescroll :bar="bar">
+          <a v-for="post in posts" :key="post.id" href="" class="post-item">
+            <!--<div class="image"><img data-src="{{feature_image}}" src="{{feature_image}}"></div>-->
 
-              <div class="image"><img src="~/assets/images/default.jpg"></div>
+            <div class="image"><img src="~/assets/images/default.jpg"></div>
 
-              <div class="content-warp">
-                <div class="title">&lt; title &gt;</div>
-                <div class="content">
-                  excerpt words="33"
-                </div>
-                <div class="other">
-                  <!--<a><i class="iconfont icon-iconfontordinaryliulan"></i>52</a>-->
-                  <!--<a><i class="iconfont icon-icon27"></i>52</a>-->
-                  <span><i class="iconfont icon-shijian"></i>date format="YYYY/MM/DD"</span>
-                </div>
+            <div class="content-warp">
+              <div class="title">&lt; {{post.title}} &gt;</div>
+              <div class="content">
+                {{post.excerpt}}
               </div>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <!--<div class="image"><img data-src="{{feature_image}}" src="{{feature_image}}"></div>-->
-
-              <div class="image"><img src="~/assets/images/default.jpg"></div>
-
-              <div class="content-warp">
-                <div class="title">&lt; title &gt;</div>
-                <div class="content">
-                  excerpt words="33"
-                </div>
-                <div class="other">
-                  <!--<a><i class="iconfont icon-iconfontordinaryliulan"></i>52</a>-->
-                  <!--<a><i class="iconfont icon-icon27"></i>52</a>-->
-                  <span><i class="iconfont icon-shijian"></i>date format="YYYY/MM/DD"</span>
-                </div>
+              <div class="other">
+                <!--<a><i class="iconfont icon-iconfontordinaryliulan"></i>52</a>-->
+                <!--<a><i class="iconfont icon-icon27"></i>52</a>-->
+                <span><i class="iconfont icon-shijian"></i>date format="YYYY/MM/DD"</span>
               </div>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <!--<div class="image"><img data-src="{{feature_image}}" src="{{feature_image}}"></div>-->
-
-              <div class="image"><img src="~/assets/images/default.jpg"></div>
-
-              <div class="content-warp">
-                <div class="title">&lt; title &gt;</div>
-                <div class="content">
-                  excerpt words="33"
-                </div>
-                <div class="other">
-                  <!--<a><i class="iconfont icon-iconfontordinaryliulan"></i>52</a>-->
-                  <!--<a><i class="iconfont icon-icon27"></i>52</a>-->
-                  <span><i class="iconfont icon-shijian"></i>date format="YYYY/MM/DD"</span>
-                </div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <!--<div class="image"><img data-src="{{feature_image}}" src="{{feature_image}}"></div>-->
-
-              <div class="image"><img src="~/assets/images/default.jpg"></div>
-
-              <div class="content-warp">
-                <div class="title">&lt; title &gt;</div>
-                <div class="content">
-                  excerpt words="33"
-                </div>
-                <div class="other">
-                  <!--<a><i class="iconfont icon-iconfontordinaryliulan"></i>52</a>-->
-                  <!--<a><i class="iconfont icon-icon27"></i>52</a>-->
-                  <span><i class="iconfont icon-shijian"></i>date format="YYYY/MM/DD"</span>
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
+            </div>
+          </a>
+        </vuescroll>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  async asyncData({ $ghost, app }) {
+    const res = await $ghost.posts.browse({
+      limit: 5,
+      include: 'tags,authors'
+    })
+    const pagation = res.meta.pagination
+    delete res.meta
+    const posts = res
+
+    return {
+      posts: posts,
+      pagation: pagation
+    }
+  },
+  data() {
+    return {
+      posts: [],
+      pagation: {},
+      rail: {
+        background: '#ea5038',
+        opacity: 1,
+        size: '6px',
+        specifyBorderRadius: false,
+        gutterOfEnds: null,
+        gutterOfSide: '2px',
+        keepShow: true
+      },
+      bar: {
+        showDelay: 500,
+        onlyShowBarOnScroll: true,
+        background: '#ea5038',
+        opacity: 1,
+        hoverStyle: false,
+        specifyBorderRadius: false,
+        minSize: false,
+        size: '6px',
+        keepShow: true
+      }
+    }
+  },
+  mounted() {}
+}
 </script>
 
 <style lang="scss">
