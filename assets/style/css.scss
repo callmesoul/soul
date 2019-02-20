@@ -71,6 +71,20 @@ a,a:hover,a:visited,a:active{
           border-radius: 5px;
           margin: 0 15px;
           cursor: pointer;
+          .song-msg{
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+            text-align: left;
+            color: #b3b3b3;
+            font-size: 12px;
+            line-height: normal;
+            margin-top: -18px;
+          }
           .current-line{
             cursor: pointer;
             position: absolute;

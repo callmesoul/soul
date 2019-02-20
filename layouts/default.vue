@@ -124,16 +124,17 @@
         <div class="msg">
           <span class="time">01:38</span>
           <div class="line">
+            <div class="song-msg">{{$store.state.musics && $store.state.musics[$store.state.musicPlayIndex] ? $store.state.musics[$store.state.musicPlayIndex].name + '-' + $store.state.musics[$store.state.musicPlayIndex].singer:''}}</div>
             <div class="current-line">
               <span class="target"></span>
             </div>
           </div>
-          <span class="all-time">04:00</span>
+          <span class="all-time">{{$store.state.player.duration}}</span>
         </div>
         <div class="right-control">
           <a class="order-btn flex flex-align-center">
             <span class="iconfont icon-ttpodicon"></span>
-            <span class="number flex1">8</span>
+            <span class="number flex1">{{$store.state.musics.length}}</span>
           </a>
         </div>
         <audio class="mian-audio" ref="main-audio" controls="controls">
@@ -160,7 +161,17 @@ export default {
     const index = this.$store.state.musicPlayIndex
     if (this.$store.state.musics[index]) {
       this.$store.state.player.src = this.$store.state.musics[index].url
-      this.$store.state.player.play()
+      this.$store.state.player.load()
+      this.$store.state.player.oncanplay = res => {}
+      this.$store.state.player
+        .play()
+        .then(() => {
+          this.$store.state.player = true
+        })
+        .catch(data => {
+          this.$store.state.player = false
+        })
+        .finally(data => {})
     }
   }
 }
