@@ -117,19 +117,19 @@
     <div class="main-bottom">
       <div class="music flex flex-pack-justify flex-align-center">
         <div class="control">
-          <a><span class="iconfont icon-shangyishou"></span></a>
-          <a><span class="iconfont icon-kaishi1"></span></a>
-          <a><span class="iconfont icon-xiayishou-copy"></span></a>
+          <a><span class="iconfont icon-shangyishou" @click="preSong"></span></a>
+          <a><span class="iconfont" :class="$store.state.playing?'icon-kaishi':'icon-kaishi1'" @click="playControl"></span></a>
+          <a><span class="iconfont icon-xiayishou-copy"  @click="nextSong"></span></a>
         </div>
         <div class="msg">
-          <span class="time">01:38</span>
+          <span class="time">{{currentTimeString}}</span>
           <div class="line">
             <div class="song-msg">{{$store.state.musics && $store.state.musics[$store.state.musicPlayIndex] ? $store.state.musics[$store.state.musicPlayIndex].name + '-' + $store.state.musics[$store.state.musicPlayIndex].singer:''}}</div>
-            <div class="current-line">
+            <div class="current-line" ref="progress-line">
               <span class="target"></span>
             </div>
           </div>
-          <span class="all-time">{{$store.state.player.duration}}</span>
+          <span class="all-time">{{durationString}}</span>
         </div>
         <div class="right-control">
           <a class="order-btn flex flex-align-center">
@@ -141,12 +141,19 @@
           Your browser does not support the audio element.
         </audio>
       </div>
-
     </div>
   </div>
 </template>
 <script>
 export default {
+  data() {
+    return {
+      durationString: '00:00',
+      currentTime: 0,
+      currentTimeString: '00:00',
+      duration: 0
+    }
+  },
   async created() {},
   async mounted() {
     const res = await this.$axios.get(
@@ -162,16 +169,92 @@ export default {
     if (this.$store.state.musics[index]) {
       this.$store.state.player.src = this.$store.state.musics[index].url
       this.$store.state.player.load()
-      this.$store.state.player.oncanplay = res => {}
+      this.$store.state.player.oncanplay = res => {
+        this.durationString = this.setTimeFormat(res.currentTarget.duration)
+        this.duration = res.currentTarget.duration
+      }
       this.$store.state.player
         .play()
-        .then(() => {
-          this.$store.state.player = true
-        })
-        .catch(data => {
-          this.$store.state.player = false
-        })
+        .then(() => {})
+        .catch(data => {})
         .finally(data => {})
+      // 监听播放
+      this.$store.state.player.onplay = () => {
+        this.$store.commit('play')
+      }
+      // 监听暂停
+      this.$store.state.player.onpause = () => {
+        this.$store.commit('pause')
+      }
+      // 监听播放完
+      this.$store.state.player.onended = () => {
+        this.nextSong()
+      }
+      // 监听加载失败时 （网络错误、加载错误等）
+      /* this.$store.state.player.onemptied = () => {
+        debugger
+        this.nextSong()
+      } */
+      // 监听加载错误
+      this.$store.state.player.onerror = () => {
+        this.nextSong()
+      }
+      // 监听播放进度
+      this.$store.state.player.ontimeupdate = res => {
+        const time = res.currentTarget.currentTime
+        this.currentTimeString = this.setTimeFormat(time)
+        this.currentTime = time
+      }
+    }
+  },
+  watch: {
+    currentTime(val) {
+      this.setProgressLineWidth()
+    },
+    duration(val) {
+      this.setProgressLineWidth()
+    }
+  },
+  methods: {
+    /* 播放控制 */
+    playControl() {
+      if (this.$store.state.playing) {
+        this.$store.state.player.pause()
+      } else {
+        this.$store.state.player
+          .play()
+          .then(() => {})
+          .catch(data => {})
+          .finally(data => {})
+      }
+    },
+    /* 上一首 */
+    preSong() {
+      this.$store.commit('preSong')
+    },
+    /* 下一首 */
+    nextSong() {
+      this.$store.commit('nextSong')
+    },
+    // 时间格式转换
+    setTimeFormat(time) {
+      let min = Math.floor(time / 60).toString()
+      if (min.length <= 1) {
+        min = '0' + min
+      }
+      let sec = parseInt(time - min * 60).toString()
+      if (sec.length <= 1) {
+        sec = '0' + sec
+      }
+      return `${min}:${sec}`
+    },
+    // 设置进度条的宽度
+    setProgressLineWidth() {
+      if (this.$refs['progress-line']) {
+        let percent = parseFloat(this.currentTime / this.duration)
+        percent = percent * 100
+        this.$refs['progress-line'].style.width = percent + '%'
+      }
     }
   }
 }

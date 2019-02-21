@@ -34,7 +34,7 @@ a,a:hover,a:visited,a:active{
   text-align: center;
     .music{
       margin: 0 auto;
-      width: 740px;
+      width: 850px;
       .control{
         text-align: center;
         a{
@@ -58,6 +58,9 @@ a,a:hover,a:visited,a:active{
         .time,.all-time{
           font-size: 12px;
           color: #6b6b6b;
+          display: inline-block;
+          width: 35px;
+          text-align: center;
         }
         .time{
         }
@@ -93,31 +96,31 @@ a,a:hover,a:visited,a:active{
             height: 4px;
             margin-left: 1px;
             border-radius: 5px;
-            width: calc( 100% - 2px);
+            width: 0;
             background: #eb4f38;
             margin-top: -2px;
             box-shadow: 0 0 27px #d06666;
             .target{
               cursor: pointer;
               position: absolute;
-              width: 16px;
-              height: 16px;
+              width: 10px;
+              height: 10px;
               border-radius: 50%;
               border: 1px solid #ffffff;
               right: 0;
               top: 50%;
-              margin-top: -8px;
-              margin-right: -8px;
+              margin-top: -5px;
+              margin-right: -5px;
               background: #ffffff;
               &:after{
                 content: '';
                 position: absolute;
-                width: 22px;
-                height: 22px;
+                width: 16px;
+                height: 16px;
                 top: 50%;
                 left: 50%;
-                margin-top: -11px;
-                margin-left: -11px;
+                margin-top: -8px;
+                margin-left: -8px;
                 border: 1px solid #ffffff;
                 border-radius: 50%;
                 box-sizing: border-box;
