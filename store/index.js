@@ -8,7 +8,7 @@ const store = () =>
     state: {
       posts: [],
       musics: [],
-      musicPlayIndex: 0,
+      musicPlayIndex: localStorage.getItem('musicPlayIndex') || 0,
       player: '',
       playing: false
     },
@@ -36,6 +36,7 @@ const store = () =>
         } else {
           state.musicPlayIndex = state.musics.length - 1
         }
+        localStorage.setItem('musicPlayIndex', state.musicPlayIndex)
         state.player.src = state.musics[state.musicPlayIndex].url
         state.player.play()
       },
@@ -47,8 +48,18 @@ const store = () =>
         } else {
           state.musicPlayIndex = 0
         }
+        localStorage.setItem('musicPlayIndex', state.musicPlayIndex)
         state.player.src = state.musics[state.musicPlayIndex].url
         state.player.play()
+      },
+      playIndex(state, { index }) {
+        if (state.musicPlayIndex !== index) {
+          state.player.pause()
+          state.musicPlayIndex = index
+          localStorage.setItem('musicPlayIndex', state.musicPlayIndex)
+          state.player.src = state.musics[state.musicPlayIndex].url
+          state.player.play()
+        }
       }
     },
     actions: {

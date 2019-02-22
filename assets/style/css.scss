@@ -32,6 +32,8 @@ a,a:hover,a:visited,a:active{
     height: 50px;
   line-height: 50px;
   text-align: center;
+  position: relative;
+  z-index: 2;
     .music{
       margin: 0 auto;
       width: 850px;
@@ -140,6 +142,11 @@ a,a:hover,a:visited,a:active{
           border-radius: 5px;
           line-height: normal;
           border: 1px solid #6a5d53;
+
+          &:hover{
+            background: #000000;
+            color: #ffffff;
+          }
         }
       }
       .mian-audio{
@@ -147,6 +154,48 @@ a,a:hover,a:visited,a:active{
       }
     }
 }
+.music-list{
+  position: fixed;
+  width: 900px;
+  height: 200px;
+  background: rgb(39,35,32);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  left: 50%;
+  margin-left: -450px;
+  bottom: 0;
+  margin-bottom: -199px;
+  z-index: 1;
+  border-radius: 10px 10px 0 0;
+  padding: 15px;
+  box-sizing: border-box;
+  transition: all 0.5s ease-in-out;
+  &.active{
+    margin-bottom: 50px;
+  }
+  .music-item{
+    line-height: 30px;
+    color: #b3b3b3;
+    font-size: 12px;
+    border-bottom: 1px solid #353331;
+    cursor: pointer;
+    &:hover{
+      background: #353331;
+    }
+    &.active{
+      color: #ea5038;
+    }
+    &:last-child{
+      border-bottom: 0;
+    }
+    .iconfont{
+      margin-right: 10px;
+    }
+    .title{
+      text-align: left;
+    }
+  }
+}
+
 .main-left{
     width: 250px;
     background: rgba(59,54,51,0.6);
@@ -417,6 +466,10 @@ ul.nav {
     font-size: 12px;
     margin: 0 10px;
 }
+.box{
+  box-sizing: border-box;
+  height: 100%;
+}
 .box-top{
     color: #b3b3b3;
     font-size: 12px;
@@ -445,6 +498,11 @@ ul.nav {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
+  .swiper-container{
+    width: 100%;
+    height: 100%;
+  }
+
   .image{
     margin-bottom: 2px;
     overflow: hidden;
@@ -454,10 +512,11 @@ ul.nav {
     }
   }
   .post-item{
-    display: inline-block;
-    margin-right: 1%;
-    width: 30%;
-    vertical-align: top;
+    //display: inline-block;
+    //margin-right: 1%;
+    //width: 30%;
+    //vertical-align: top;
+    //height: 50vh;
     &:hover .image img{
       transform:scale(1.2);
       -ms-transform:scale(1.2); 	/* IE 9 */
@@ -570,6 +629,7 @@ ul.nav {
 #frame{
     padding: 30px;
   min-width: 0;
+  box-sizing: border-box;
 }
 
 .nicescroll-rails{

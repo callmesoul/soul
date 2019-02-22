@@ -5,25 +5,25 @@
       <!--<span>首页</span>-->
       <!--</div>-->
       <div class="box-content">
-        <vuescroll :bar="bar">
-          <a v-for="post in posts" :key="post.id" href="" class="post-item">
-            <!--<div class="image"><img data-src="{{feature_image}}" src="{{feature_image}}"></div>-->
-
-            <div class="image"><img src="~/assets/images/default.jpg"></div>
-
-            <div class="content-warp">
-              <div class="title">&lt; {{post.title}} &gt;</div>
-              <div class="content">
-                {{post.excerpt}}
+        <div :bar="bar" v-swiper:mySwiper="swiperOption" @someSwiperEvent="callback">
+          <div class="swiper-wrapper">
+            <a v-for="post in posts" :key="post.id" href="" class="post-item swiper-slide flex flex-v">
+              <div class="image"><img src="~/assets/images/default.jpg"></div>
+              <div class="content-warp flex1">
+                <div class="title">&lt; {{post.title}} &gt;</div>
+                <div class="content">
+                  {{post.excerpt}}
+                </div>
+                <div class="other">
+                  <!--<a><i class="iconfont icon-iconfontordinaryliulan"></i>52</a>-->
+                  <!--<a><i class="iconfont icon-icon27"></i>52</a>-->
+                  <span><i class="iconfont icon-shijian"></i>date format="YYYY/MM/DD"</span>
+                </div>
               </div>
-              <div class="other">
-                <!--<a><i class="iconfont icon-iconfontordinaryliulan"></i>52</a>-->
-                <!--<a><i class="iconfont icon-icon27"></i>52</a>-->
-                <span><i class="iconfont icon-shijian"></i>date format="YYYY/MM/DD"</span>
-              </div>
-            </div>
-          </a>
-        </vuescroll>
+            </a>
+          </div>
+          <div class="swiper-scrollbar"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@
 export default {
   async asyncData({ $ghost, app }) {
     const res = await $ghost.posts.browse({
-      limit: 5,
+      limit: 12,
       include: 'tags,authors'
     })
     const pagation = res.meta.pagination
@@ -68,6 +68,14 @@ export default {
         minSize: false,
         size: '6px',
         keepShow: true
+      },
+      swiperOption: {
+        mousewheel: true,
+        slidesPerView: 4,
+        spaceBetween: 30,
+        scrollbar: {
+          el: '.swiper-scrollbar'
+        }
       }
     }
   },

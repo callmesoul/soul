@@ -37,7 +37,13 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/axios.js', '~/plugins/ctx-ghost.js', '~/plugins/scroller.js'],
+  plugins: [
+    '~/plugins/axios.js',
+    '~/plugins/ctx-ghost.js',
+    '~/plugins/scroller.js',
+    '~/plugins/v-touch.js',
+    '~/plugins/swiper.js'
+  ],
 
   /*
   ** Nuxt.js modules

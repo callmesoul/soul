@@ -115,24 +115,25 @@
       </div>-->
     </div>
     <div class="main-bottom">
+
       <div class="music flex flex-pack-justify flex-align-center">
         <div class="control">
-          <a><span class="iconfont icon-shangyishou" @click="preSong"></span></a>
-          <a><span class="iconfont" :class="$store.state.playing?'icon-kaishi':'icon-kaishi1'" @click="playControl"></span></a>
-          <a><span class="iconfont icon-xiayishou-copy"  @click="nextSong"></span></a>
+          <a @click="preSong"><span class="iconfont icon-shangyishou"></span></a>
+          <a @click="playControl"><span class="iconfont" :class="$store.state.playing?'icon-kaishi':'icon-kaishi1'"></span></a>
+          <a @click="nextSong"><span class="iconfont icon-xiayishou-copy"></span></a>
         </div>
         <div class="msg">
           <span class="time">{{currentTimeString}}</span>
-          <div class="line">
+          <div class="line" ref="progress-line-warp">
             <div class="song-msg">{{$store.state.musics && $store.state.musics[$store.state.musicPlayIndex] ? $store.state.musics[$store.state.musicPlayIndex].name + '-' + $store.state.musics[$store.state.musicPlayIndex].singer:''}}</div>
             <div class="current-line" ref="progress-line">
-              <span class="target"></span>
+              <a tag="a" class="target" v-on:mousedown.prevent="mousedown"></a>
             </div>
           </div>
           <span class="all-time">{{durationString}}</span>
         </div>
         <div class="right-control">
-          <a class="order-btn flex flex-align-center">
+          <a class="order-btn flex flex-align-center" @click="toogleShowMusicList">
             <span class="iconfont icon-ttpodicon"></span>
             <span class="number flex1">{{$store.state.musics.length}}</span>
           </a>
@@ -141,6 +142,14 @@
           Your browser does not support the audio element.
         </audio>
       </div>
+    </div>
+    <div class="music-list" :class="{'active':isShowMusicList}">
+      <vuescroll>
+        <a class="music-item flex flex-align-center" :class="{'active':index==$store.state.musicPlayIndex}" v-for="(music,index) in $store.state.musics" v-bind:key="index" @click="playIndex(index)">
+          <span class="iconfont" :class="index==$store.state.musicPlayIndex?'icon-kaishi':'icon-kaishi1'"></span>
+          <span class="title flex1">{{music.name}}-{{music.singer}}</span>
+        </a>
+      </vuescroll>
     </div>
   </div>
 </template>
@@ -151,7 +160,10 @@ export default {
       durationString: '00:00',
       currentTime: 0,
       currentTimeString: '00:00',
-      duration: 0
+      duration: 0,
+      isDrag: false, // 是否拖动进度条
+      mousedownClientX: 0,
+      isShowMusicList: false // 是否显示播放列表
     }
   },
   async created() {},
@@ -160,7 +172,6 @@ export default {
       'https://api.bzqll.com/music/netease/songList?key=579621905&id=2008272804&limit=10&offset=0'
     )
     if (res && res.data && res.data.data && res.data.data.songs) {
-      res.data.data.songs.splice(10, res.data.data.songs.length)
       const musics = res.data.data.songs
       this.$store.commit('setMusics', { musics: musics })
     }
@@ -250,11 +261,54 @@ export default {
     },
     // 设置进度条的宽度
     setProgressLineWidth() {
-      if (this.$refs['progress-line']) {
+      if (this.$refs['progress-line'] && !this.isDrag) {
+        // !this.isDrag 拖动的时候不让播放进度去控制进度条
         let percent = parseFloat(this.currentTime / this.duration)
         percent = percent * 100
         this.$refs['progress-line'].style.width = percent + '%'
       }
+    },
+    mousedown(e) {
+      let mousedownClientX = e.clientX
+      const progressLine = this.$refs['progress-line']
+      const progressLineWarp = this.$refs['progress-line-warp']
+      let currentTime = 0
+      this.isDrag = true
+      const self = this
+      document.addEventListener('mousemove', mousemove, false)
+      document.addEventListener('mouseup', mouseup, false)
+      function mousemove(res) {
+        // 鼠标拖动控制进度条的长度
+        const dragWidth = res.clientX - mousedownClientX
+        mousedownClientX = res.clientX
+        const clientWidth = progressLine.clientWidth
+        let newClientWidth = clientWidth + dragWidth
+        const warpClientWidth = progressLineWarp.clientWidth
+        if (newClientWidth < 0) {
+          newClientWidth = 0
+        } else if (newClientWidth > warpClientWidth) {
+          newClientWidth = warpClientWidth
+        }
+        progressLine.style.width = newClientWidth + 'px'
+        // 鼠标拖动控制 显示 当前时间
+        const percent = progressLine.clientWidth / progressLineWarp.clientWidth
+        currentTime = self.duration * percent
+        self.currentTimeString = self.setTimeFormat(currentTime)
+      }
+      function mouseup() {
+        // 把最后选的时间设为音乐的当前播放时间
+        self.$store.state.player.currentTime = currentTime
+        self.isDrag = false
+        document.removeEventListener('mousemove', mousemove, false)
+        document.removeEventListener('mouseup', mouseup, false)
+      }
+    },
+    playIndex(index) {
+      this.$store.commit('playIndex', { index: index })
+    },
+    // 隐藏/显示播放列表
+    toogleShowMusicList() {
+      this.isShowMusicList = !this.isShowMusicList
     }
   }
 }
