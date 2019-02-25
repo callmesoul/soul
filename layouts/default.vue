@@ -11,67 +11,22 @@
           <div class="nav">
             <ul>
               <li>
-                <a href="">
+                <nuxt-link to="/">
                   <div class="icon"><i class="iconfont icon-home"></i></div>
                   <div class="name">
                     <div class="cnname">首页</div>
                     <div class="enname">Home</div>
                   </div>
-                </a>
+                </nuxt-link>
               </li>
-              <li>
-                <a href="/tag/webfront/">
-                  <div class="icon"><i class="iconfont icon-code"></i></div>
+              <li v-for="(menu,index) in menus" :key="index">
+                <nuxt-link :to="'/tag/'+menu.slug">
+                  <div class="icon"><i class="iconfont" :class="'icon-'+menu.slug"></i></div>
                   <div class="name">
-                    <div class="cnname">前端开发</div>
-                    <div class="enname">Frontend Development</div>
+                    <div class="cnname">{{menu.name}}</div>
+                    <div class="enname">{{menu.description}}</div>
                   </div>
-                </a>
-              </li>
-              <li>
-                <a href="/tag/xiao-cheng-xu/">
-                  <div class="icon"><i class="iconfont icon-xiaochengxu"></i></div>
-                  <div class="name">
-                    <div class="cnname">小程序</div>
-                    <div class="enname">Mini Programs</div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/tag/linux/">
-                  <div class="icon"><i class="iconfont icon-linux"></i></div>
-                  <div class="name">
-                    <div class="cnname">Linux</div>
-                    <div class="enname">Linux About</div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/tag/design/">
-                  <div class="icon"><i class="iconfont icon-design"></i></div>
-                  <div class="name">
-                    <div class="cnname">设计</div>
-                    <div class="enname">Design About</div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/tag/movie/">
-                  <div class="icon"><i class="iconfont icon-movie"></i></div>
-                  <div class="name">
-                    <div class="cnname">电影</div>
-                    <div class="enname">Movie About</div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/tag/other/">
-                  <div class="icon"><i class="iconfont icon-other"></i></div>
-                  <div class="name">
-                    <div class="cnname">杂记</div>
-                    <div class="enname">All Other Thing</div>
-                  </div>
-                </a>
+                </nuxt-link>
               </li>
               <li>
                 <a href="/link/">
@@ -163,11 +118,17 @@ export default {
       duration: 0,
       isDrag: false, // 是否拖动进度条
       mousedownClientX: 0,
-      isShowMusicList: false // 是否显示播放列表
+      isShowMusicList: false, // 是否显示播放列表
+      menus: []
     }
   },
   async created() {},
   async mounted() {
+    const menuRes = await this.$ghost.tags.browse()
+    if (menuRes.meta) {
+      delete menuRes.meta
+    }
+    this.menus = menuRes
     const res = await this.$axios.get(
       'https://api.bzqll.com/music/netease/songList?key=579621905&id=2008272804&limit=10&offset=0'
     )

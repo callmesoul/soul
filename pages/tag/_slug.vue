@@ -7,7 +7,7 @@
       <div class="box-content">
         <div :bar="bar" v-swiper:mySwiper="swiperOption" @onSlideChangeStart="swiperCallback">
           <div class="swiper-wrapper">
-            <nuxt-link :to="post.slug" v-for="post in posts" :key="post.id" class="post-item swiper-slide flex flex-v">
+            <nuxt-link :to="post.slug" v-for="post in posts" :key="post.id" href="" class="post-item swiper-slide flex flex-v">
               <div class="image">
                 <img :src="post.feature_image" v-if="post.feature_image && post.feature_image!=''"></img>
                 <img src="~@/assets/images/default.jpg" v-else></img>
@@ -35,11 +35,14 @@
 <script>
 import dayjs from 'dayjs'
 export default {
-  async asyncData({ $ghost, app }) {
+  async asyncData({ $ghost, params }) {
     const res = await $ghost.posts.browse({
+      filter: `tag:${params.slug}`,
+      page: 1,
       limit: 12
     })
     const pagation = res.meta.pagination
+    pagation.filter = `tag:${params.slug}`
     delete res.meta
     res.map(item => {
       item.published_at = dayjs(item.published_at).format('YYYY-MM-DD')
