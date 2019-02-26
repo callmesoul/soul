@@ -1,5 +1,5 @@
 const GhostContentAPI = require('@tryghost/content-api')
-const pkg = require('./package');
+const pkg = require('./package')
 
 const ghost = new GhostContentAPI({
   host: 'https://blog.callmesoul.cn',
@@ -14,7 +14,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: 'CallMeSoul',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -42,7 +42,9 @@ module.exports = {
     '~/plugins/ctx-ghost.js',
     '~/plugins/scroller.js',
     '~/plugins/v-touch.js',
-    '~/plugins/swiper.js'
+    '~/plugins/swiper.js',
+    '~/plugins/highlight.js'
+    // '~/plugins/ga.js'
   ],
 
   /*
@@ -74,7 +76,7 @@ module.exports = {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
+          // loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
       }

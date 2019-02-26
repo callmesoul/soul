@@ -409,18 +409,12 @@ ul,li{
     font-size: 180px;
     color: #ea5038 !important;
 }
-ul.nav {
+.nav {
     margin: 0;
     padding: 0;
-}
-.nav li .icon{
-    margin-right: 10px;
-}
-.nav li .icon,.nav ul li .name{
+  a{
     display: inline-block;
     vertical-align: middle;
-}
-.nav li a{
     display: block;
     padding: 15px 30px;
     cursor: pointer;
@@ -430,26 +424,38 @@ ul.nav {
     font-size: 18px !important;
     color: #ffffff;
     border-bottom: 1px solid #4d3f36;
+    &.nuxt-link-active{
+      background: rgba(255, 255, 255, 0.1);
+    }
+    &:hover,.nav-current{
+      background: rgba(255,255,255,0.1);
+    }
+    .icon{
+      margin-right: 10px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .name{
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 0.2px;
+      font-size: 16px;
+      color: #ffffff;
+    }
+    .cnname{
+      font-size: 16px;
+      color: #ffffff;
+    }
+    .enname{
+      font-size: 12px;
+      color: #9e9d99;
+      margin-top: 5px;
+    }
+  }
 }
-.nav li .name{
-    margin-left: 0.2px;
-}
-.nav li  a{
-    font-size: 18px;
-    color: #ffffff;
-}
-.nav li .name .cnname{
-    font-size: 16px;
-    color: #ffffff;
-}
-.nav li .name .enname{
-    font-size: 12px;
-    color: #9e9d99;
-    margin-top: 5px;
-}
-.nav li a:hover,.nav li.nav-current a{
-    background: rgba(255,255,255,0.1);
-}
+
+
+
 .main-right{
     position: relative;
     overflow: hidden;

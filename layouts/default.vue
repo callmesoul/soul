@@ -2,42 +2,34 @@
 <template>
   <div class="main height-100 flex flex-v">
     <div class="main-top flex flex1">
-      <a class="mobile-nav-btn iconfont icon-fenlei"></a>
-      <a class="mobile-logo iconfont icon-logo" href=""></a>
+      <nuxt-link to="/home" class="mobile-nav-btn iconfont icon-fenlei"></nuxt-link>
+      <nuxt-link to="/home" class="mobile-logo iconfont icon-logo" ></nuxt-link>
       <!--主页上左部分-->
       <div class="height-100 main-left">
         <div class="main-left-top">
-          <div class="logo"><a class="iconfont icon-logo" href=""></a></div>
+          <div class="logo"><nuxt-link to="/home" class="iconfont icon-logo"></nuxt-link></div>
           <div class="nav">
-            <ul>
-              <li>
-                <nuxt-link to="/">
-                  <div class="icon"><i class="iconfont icon-home"></i></div>
-                  <div class="name">
-                    <div class="cnname">首页</div>
-                    <div class="enname">Home</div>
-                  </div>
-                </nuxt-link>
-              </li>
-              <li v-for="(menu,index) in menus" :key="index">
-                <nuxt-link :to="'/tag/'+menu.slug">
-                  <div class="icon"><i class="iconfont" :class="'icon-'+menu.slug"></i></div>
-                  <div class="name">
-                    <div class="cnname">{{menu.name}}</div>
-                    <div class="enname">{{menu.description}}</div>
-                  </div>
-                </nuxt-link>
-              </li>
-              <li>
-                <a href="/link/">
-                  <div class="icon"><i class="iconfont icon-link"></i></div>
-                  <div class="name">
-                    <div class="cnname">友情链接</div>
-                    <div class="enname">Friends Web Link</div>
-                  </div>
-                </a>
-              </li>
-            </ul>
+            <nuxt-link to="/home">
+              <div class="icon"><i class="iconfont icon-home"></i></div>
+              <div class="name">
+                <div class="cnname">首页</div>
+                <div class="enname">Home</div>
+              </div>
+            </nuxt-link>
+            <nuxt-link :to="'/tag/'+menu.slug" v-for="(menu,index) in menus" :key="index">
+              <div class="icon"><i class="iconfont" :class="'icon-'+menu.slug"></i></div>
+              <div class="name">
+                <div class="cnname">{{menu.name}}</div>
+                <div class="enname">{{menu.description}}</div>
+              </div>
+            </nuxt-link>
+            <!--<a href="/link/">
+              <div class="icon"><i class="iconfont icon-link"></i></div>
+              <div class="name">
+                <div class="cnname">友情链接</div>
+                <div class="enname">Friends Web Link</div>
+              </div>
+            </a>-->
           </div>
         </div>
 
@@ -129,6 +121,9 @@ export default {
       delete menuRes.meta
     }
     this.menus = menuRes
+    const setRes = await this.$ghost.settings.browse()
+    this.$store.commit('initSettings',{settings:setRes})
+
     const res = await this.$axios.get(
       'https://api.bzqll.com/music/netease/songList?key=579621905&id=2008272804&limit=10&offset=0'
     )

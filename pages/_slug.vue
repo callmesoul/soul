@@ -1,21 +1,35 @@
 <template>
   <div class="article-content flex1">
-    <div class="article-content-container">
+    <vuescroll class="article-content-container">
       <div class="article-title row">
         <div class="title">{{post.title}}</div>
         <div class=" other"><!--<i class="iconfont icon-iconfontordinaryliulan"></i> 56--> <i class="iconfont icon-shijian"></i> ate format="YYYY/MM/DD"</div>
       </div>
       <div class="article-message markdown-body">
-        <div class="text" v-html="post.html">
+        <div class="text" v-html="post.html" v-highlight>
         </div>
       </div>
-    </div>
+      <div id="gitalk-container"></div>
+    </vuescroll>
   </div>
 </template>
 
 <script>
 // import dayjs from 'dayjs'
+import 'gitalk/dist/gitalk.css'
+import Gitalk from 'gitalk'
 export default {
+  head() {
+    return {
+      meta:
+        [
+          {
+            name: `${this.post.title}--${this.$store.state.settings.title}`,
+            content: `${this.post.plaintext}`
+          },
+        ]
+    }
+  },
   async asyncData({ $ghost, params }) {
     const res = await $ghost.posts.read(
       { slug: params.slug },
@@ -65,7 +79,18 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() {
+    const gitalk = new Gitalk({
+      clientID: '85810192d72d7f763a9a',
+      clientSecret: 'e9867192041e53ad9f4581db6e50bbe7373a090d',
+      repo: 'myblog',
+      owner: 'callmesoul',
+      admin: ['callmesoul'],
+      id: this.post.id, // Ensure uniqueness and length less than 50
+      distractionFreeMode: false // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+  },
   methods: {
     swiperCallback(res) {
       debugger

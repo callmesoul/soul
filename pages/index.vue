@@ -35,6 +35,17 @@
 <script>
 import dayjs from 'dayjs'
 export default {
+  head() {
+    return {
+      meta:
+        [
+          {
+            name: `首页--${this.$store.state.settings.title}`,
+            content: `${this.$store.state.settings.description}`
+          },
+        ]
+    }
+  },
   async asyncData({ $ghost, app }) {
     const res = await $ghost.posts.browse({
       limit: 12

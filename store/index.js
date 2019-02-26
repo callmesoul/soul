@@ -10,7 +10,8 @@ const store = () =>
       musics: [],
       musicPlayIndex: localStorage.getItem('musicPlayIndex') || 0,
       player: '',
-      playing: false
+      playing: false,
+      settings:{}
     },
     mutations: {
       add(state) {
@@ -60,6 +61,9 @@ const store = () =>
           state.player.src = state.musics[state.musicPlayIndex].url
           state.player.play()
         }
+      },
+      initSettings(state, {settings}){
+        state.settings = settings
       }
     },
     actions: {

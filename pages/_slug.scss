@@ -2,14 +2,12 @@
 
 .article-content{
   height: 100%;
-}
-.article-content-container{
-  background: rgba(80, 73, 70, 0.6);
-  padding: 15px 30px;
+  padding: 30px;
   box-sizing: border-box;
-  height: 100%;
-
+  position: relative;
+  background: rgba(80, 73, 70, 0.6);
 }
+
 .article-title .title{
   font-size: 30px;
   color: #ffffff;
