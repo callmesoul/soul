@@ -8,7 +8,7 @@ const ghost = new GhostContentAPI({
 })
 
 module.exports = {
-  mode: 'spa',
+  mode: 'universal',
 
   /*
   ** Headers of the page
@@ -38,13 +38,12 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/axios.js',
-    '~/plugins/ctx-ghost.js',
-    '~/plugins/scroller.js',
-    '~/plugins/v-touch.js',
-    '~/plugins/swiper.js',
-    '~/plugins/highlight.js'
-    // '~/plugins/ga.js'
+    {src: '~/plugins/axios.js'},
+    {src:'~/plugins/ctx-ghost.js'},
+    {src:'~/plugins/scroller.js'},
+    {src:'~/plugins/swiper.js'},
+    {src:'~/plugins/highlight.js'},
+    {src:'~/plugins/ga.js',ssr:false}
   ],
 
   /*

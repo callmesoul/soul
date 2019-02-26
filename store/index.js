@@ -8,7 +8,7 @@ const store = () =>
     state: {
       posts: [],
       musics: [],
-      musicPlayIndex: localStorage.getItem('musicPlayIndex') || 0,
+      musicPlayIndex: 0,
       player: '',
       playing: false,
       settings:{}
