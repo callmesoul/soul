@@ -6,8 +6,8 @@
         <div class=" other"><!--<i class="iconfont icon-iconfontordinaryliulan"></i> 56--> <i class="iconfont icon-shijian"></i> ate format="YYYY/MM/DD"</div>
       </div>
       <div class="article-message markdown-body">
-        <div class="text" v-html="post.html" v-highlight>
-        </div>
+        <article class="text" v-html="post.html" v-highlight>
+        </article>
       </div>
       <div id="gitalk-container"></div>
     </vuescroll>

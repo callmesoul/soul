@@ -10,6 +10,11 @@ const ghost = new GhostContentAPI({
 module.exports = {
   mode: 'universal',
 
+  cache: {
+    max: 1000,
+    maxAge: 900000
+  },
+
   /*
   ** Headers of the page
   */

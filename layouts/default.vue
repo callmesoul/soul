@@ -1,22 +1,22 @@
 
 <template>
-  <div class="main height-100 flex flex-v">
+  <main class="main height-100 flex flex-v">
     <div class="main-top flex flex1">
-      <nuxt-link to="/home" class="mobile-nav-btn iconfont icon-fenlei"></nuxt-link>
+      <nuxt-link  to="/home" class="mobile-nav-btn iconfont icon-fenlei"></nuxt-link>
       <nuxt-link to="/home" class="mobile-logo iconfont icon-logo" ></nuxt-link>
       <!--主页上左部分-->
       <div class="height-100 main-left">
         <div class="main-left-top">
-          <div class="logo"><nuxt-link to="/home" class="iconfont icon-logo"></nuxt-link></div>
-          <div class="nav">
-            <nuxt-link to="/home">
+          <aside class="logo"><nuxt-link to="/home" class="iconfont icon-logo"></nuxt-link></aside>
+          <nav class="nav">
+            <nuxt-link title="首页" alt="首页" to="/home">
               <div class="icon"><i class="iconfont icon-home"></i></div>
               <div class="name">
                 <div class="cnname">首页</div>
                 <div class="enname">Home</div>
               </div>
             </nuxt-link>
-            <nuxt-link :to="'/tag/'+menu.slug" v-for="(menu,index) in menus" :key="index">
+            <nuxt-link :title="menu.name"  :alt="menu.name" :to="'/tag/'+menu.slug" v-for="(menu,index) in menus" :key="index">
               <div class="icon"><i class="iconfont" :class="'icon-'+menu.slug"></i></div>
               <div class="name">
                 <div class="cnname">{{menu.name}}</div>
@@ -30,7 +30,7 @@
                 <div class="enname">Friends Web Link</div>
               </div>
             </a>-->
-          </div>
+          </nav>
         </div>
 
         <div class="social flex flex-align-center ">
@@ -38,15 +38,15 @@
             <div class="icon relative">
               <a class="iconfont icon-wechat1193418easyiconnet"></a>
               <div class="float">
-                <img src="http://oyz3pjs26.bkt.clouddn.com/qrcode_for_gh_b4c00b84720c_258%20%281%29.jpg">
+                <img alt="微信二维码" title="微信二维码" src="http://oyz3pjs26.bkt.clouddn.com/qrcode_for_gh_b4c00b84720c_258%20%281%29.jpg">
               </div>
             </div>
           </div>
           <div class="flex1 text-center">
-            <div class="icon"><a class="iconfont icon-qq" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=547437716&site=qq&menu=yes"></a></div>
+            <div class="icon"><a title="加我QQ" alt="加我QQ" class="iconfont icon-qq" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=547437716&site=qq&menu=yes"></a></div>
           </div>
           <div class="flex1 text-center">
-            <div class="icon"><a class="iconfont icon-weibo" target="_blank" href="https://weibo.com/tellmesoul/"></a></div>
+            <div class="icon"><a title="关注我微博" alt="关注我微博" class="iconfont icon-weibo" target="_blank" href="https://weibo.com/tellmesoul/"></a></div>
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@
         </a>
       </vuescroll>
     </div>
-  </div>
+  </main>
 </template>
 <script>
 
