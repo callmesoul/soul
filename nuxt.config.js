@@ -32,7 +32,7 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [],
+  css: ['~/assets/style/css.scss', '~/assets/style/iconfont.css'],
 
   /*
   ** Plugins to load before mounting the App
@@ -43,7 +43,7 @@ module.exports = {
     {src:'~/plugins/scroller.js'},
     {src:'~/plugins/swiper.js'},
     {src:'~/plugins/highlight.js'},
-    {src:'~/plugins/ga.js',ssr:false}
+    // {src:'~/plugins/ga.js',ssr:false}
   ],
 
   /*
@@ -51,6 +51,7 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/component-cache',
     '@nuxtjs/axios'
   ],
   /*

@@ -101,6 +101,7 @@
   </div>
 </template>
 <script>
+
 export default {
   data() {
     return {
@@ -269,7 +270,4 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-@import '~/assets/style/css.scss';
-@import '~/assets/style/iconfont.css';
-</style>
+<style lang="scss" scoped src="./default.scss"></style>

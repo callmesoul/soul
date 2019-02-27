@@ -19,15 +19,13 @@
 import 'gitalk/dist/gitalk.css'
 import Gitalk from 'gitalk'
 export default {
+  name: 'tag',
   head() {
     return {
-      meta:
-        [
-          {
-            name: `${this.post.title}--${this.$store.state.settings.title}`,
-            content: `${this.post.plaintext}`
-          },
-        ]
+      title: `${this.post.title}--${this.$store.state.settings.title}`,
+      meta: [
+        { hid: 'description', name: 'description', content: `${this.post.plaintext}` }
+      ]
     }
   },
   async asyncData({ $ghost, params }) {
@@ -109,5 +107,5 @@ export default {
 }
 </script>
 
-<style lang="scss" src="./_slug.scss">
+<style lang="scss" scoped src="./_slug.scss">
 </style>

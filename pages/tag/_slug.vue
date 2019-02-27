@@ -7,10 +7,10 @@
       <div class="box-content">
         <div :bar="bar" v-swiper:mySwiper="swiperOption" @onSlideChangeStart="swiperCallback">
           <div class="swiper-wrapper">
-            <nuxt-link :to="'/'+post.slug" v-for="post in posts" :key="post.id" href="" class="post-item swiper-slide flex flex-v">
+            <nuxt-link :title="post.name" :alt="post.name" :to="'/'+post.slug" v-for="post in posts" :key="post.id" href="" class="post-item swiper-slide flex flex-v">
               <div class="image">
-                <img :src="post.feature_image" v-if="post.feature_image && post.feature_image!=''"></img>
-                <img src="~@/assets/images/default.jpg" v-else></img>
+                <img :title="post.name" :alt="post.name"  :src="post.feature_image" v-if="post.feature_image && post.feature_image!=''"></img>
+                <img :title="post.name" :alt="post.name"  src="~@/assets/images/default.jpg" v-else></img>
               </div>
               <div class="content-warp flex1 flex flex-v">
                 <div class="title">&lt; {{post.title}} &gt;</div>
@@ -35,15 +35,13 @@
 <script>
 import dayjs from 'dayjs'
 export default {
+  name: 'post',
   head() {
     return {
-      meta:
-        [
-          {
-            name: `${this.posts[0]?this.posts[0].tags[0].name:''}--${this.$store.state.settings.title}`,
-            content: `${this.$store.state.settings.description}`
-          },
-        ]
+      title: `${this.posts[0]?this.posts[0].tags[0].name:''}--${this.$store.state.settings.title}`,
+      meta: [
+        { hid: 'description', name: 'description', content: `${this.$store.state.settings.description}` }
+      ]
     }
   },
   async asyncData({ $ghost, params }) {
@@ -124,5 +122,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss" scoped src="../index.scss">

@@ -7,10 +7,10 @@
       <div class="box-content">
         <div :bar="bar" v-swiper:mySwiper="swiperOption" @onSlideChangeStart="swiperCallback">
           <div class="swiper-wrapper">
-            <nuxt-link :to="post.slug" v-for="post in posts" :key="post.id" class="post-item swiper-slide flex flex-v">
+            <nuxt-link :title="post.title" :alt="post.title" :to="post.slug" v-for="post in posts" :key="post.id" class="post-item swiper-slide flex flex-v">
               <div class="image">
-                <img :src="post.feature_image" v-if="post.feature_image && post.feature_image!=''"></img>
-                <img src="~@/assets/images/default.jpg" v-else></img>
+                <img :title="post.title" :alt="post.title" :src="post.feature_image" v-if="post.feature_image && post.feature_image!=''"></img>
+                <img :title="post.title" :alt="post.title" src="~@/assets/images/default.jpg" v-else></img>
               </div>
               <div class="content-warp flex1 flex flex-v">
                 <div class="title">&lt; {{post.title}} &gt;</div>
@@ -35,6 +35,7 @@
 <script>
 import dayjs from 'dayjs'
 export default {
+  name: 'home',
   async asyncData({ $ghost, app }) {
     const res = await $ghost.posts.browse({
       limit: 12
@@ -109,5 +110,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss" scoped src="./index.scss"></style>
