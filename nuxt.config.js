@@ -23,7 +23,8 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: pkg.description },
+      { name: 'baidu_ssp_verify', content: 'a8764f355637ffe0bd6133bb211d8b15' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
@@ -48,7 +49,8 @@ module.exports = {
     {src:'~/plugins/scroller.js'},
     {src:'~/plugins/swiper.js'},
     {src:'~/plugins/highlight.js'},
-    // {src:'~/plugins/ga.js',ssr:false}
+    {src:'~/plugins/baidu.js',ssr:false},
+    {src:'~/plugins/googleAd.js',ssr:false}
   ],
 
   /*
