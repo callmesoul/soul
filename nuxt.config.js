@@ -50,7 +50,7 @@ module.exports = {
     {src:'~/plugins/swiper.js'},
     {src:'~/plugins/highlight.js'},
     {src:'~/plugins/baidu.js',ssr:false},
-    {src:'~/plugins/googleAd.js',ssr:false}
+    // {src:'~/plugins/googleAd.js',ssr:false}
   ],
 
   /*
