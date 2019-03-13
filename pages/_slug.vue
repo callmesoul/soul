@@ -22,7 +22,7 @@ export default {
   name: 'tag',
   head() {
     return {
-      title: `${this.post.title}--${this.$store.state.settings.title}`,
+      title: `${this.post.title}`,
       meta: [
         { hid: 'description', name: 'description', content: `${this.post.plaintext}` }
       ]
@@ -78,16 +78,18 @@ export default {
     }
   },
   mounted() {
-    const gitalk = new Gitalk({
-      clientID: '85810192d72d7f763a9a',
-      clientSecret: 'e9867192041e53ad9f4581db6e50bbe7373a090d',
-      repo: 'myblog',
-      owner: 'callmesoul',
-      admin: ['callmesoul'],
-      id: this.post.id, // Ensure uniqueness and length less than 50
-      distractionFreeMode: false // Facebook-like distraction free mode
-    })
-    gitalk.render('gitalk-container')
+    setTimeout(()=>{
+      const gitalk = new Gitalk({
+        clientID: '85810192d72d7f763a9a',
+        clientSecret: 'e9867192041e53ad9f4581db6e50bbe7373a090d',
+        repo: 'myblog',
+        owner: 'callmesoul',
+        admin: ['callmesoul'],
+        id: this.post.id, // Ensure uniqueness and length less than 50
+        distractionFreeMode: false // Facebook-like distraction free mode
+      })
+      gitalk.render('gitalk-container')
+    },500)
   },
   methods: {
     swiperCallback(res) {
