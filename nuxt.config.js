@@ -15,7 +15,7 @@ module.exports = {
     maxAge: 900000
   },
 
-  
+
 
   /*
   ** Headers of the page
@@ -51,7 +51,7 @@ module.exports = {
     {src:'~/plugins/scroller.js'},
     {src:'~/plugins/swiper.js'},
     {src:'~/plugins/highlight.js'},
-    // {src:'~/plugins/baidu.js',ssr:false},
+    {src:'~/plugins/baidu.js',ssr:false},
     // {src:'~/plugins/googleAd.js',ssr:false}
   ],
 

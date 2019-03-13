@@ -1,6 +1,6 @@
 //百度统计
 if (process.BROWSER_BUILD && process.env.NODE_ENV === 'production') {
-  const _hmt = [];
+  /*const _hmt = [];
   //百度统计
   (function() {
     var hm = document.createElement("script");
@@ -8,7 +8,7 @@ if (process.BROWSER_BUILD && process.env.NODE_ENV === 'production') {
     hm.id = "baidu_tj";
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
-  })();
+  })();*/
   //百度站长
   (function(){
     var bp = document.createElement('script');
@@ -27,7 +27,7 @@ if (process.BROWSER_BUILD && process.env.NODE_ENV === 'production') {
 
 export default ({ app: { router }, store }) => {
   router.afterEach((to, from) => {
-    const _hmt = [];
+    /*const _hmt = [];
     //百度统计
     (function() {
       document.getElementById('baidu_tj') && document.getElementById('baidu_tj').remove();
@@ -36,7 +36,7 @@ export default ({ app: { router }, store }) => {
       hm.id = "baidu_tj";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
-    })();
+    })();*/
     //百度站长
     (function(){
       document.getElementById('baidu_zz') && document.getElementById('baidu_zz').remove();
