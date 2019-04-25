@@ -15,8 +15,6 @@ module.exports = {
     maxAge: 900000
   },
 
-
-
   /*
   ** Headers of the page
   */

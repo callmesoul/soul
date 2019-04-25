@@ -3,7 +3,7 @@
     <vuescroll class="article-content-container">
       <div class="article-title row">
         <div class="title">{{post.title}}</div>
-        <div class=" other"><!--<i class="iconfont icon-iconfontordinaryliulan"></i> 56--> <i class="iconfont icon-shijian"></i> ate format="YYYY/MM/DD"</div>
+        <div class=" other"><!--<i class="iconfont icon-iconfontordinaryliulan"></i> 56--> <i class="iconfont icon-shijian"></i>{{updateAt}} </div>
       </div>
       <div class="article-message markdown-body">
         <article class="text" v-html="post.html" v-highlight>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-// import dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import 'gitalk/dist/gitalk.css'
 import Gitalk from 'gitalk'
 export default {
@@ -74,6 +74,13 @@ export default {
             this.getPosts()
           }
         }
+      }
+    }
+  },
+  computed:{
+    updateAt(){
+      if(this.post && this.post.updated_at){
+        return dayjs(this.post.updated_at).format("YYYY/MM/DD HH:mm");
       }
     }
   },
