@@ -29,6 +29,7 @@
         </div>
       </div>
     </div>
+    <div class="beian"><a target="_blank" href="http://www.beian.miit.gov.cn">粤ICP备15053557号</a></div>
   </div>
 </template>
 
