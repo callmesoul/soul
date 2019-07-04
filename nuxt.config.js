@@ -44,11 +44,11 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {src: '~/plugins/axios.js'},
-    {src:'~/plugins/ctx-ghost.js'},
-    {src:'~/plugins/scroller.js'},
-    {src:'~/plugins/swiper.js'},
-    {src:'~/plugins/highlight.js'},
+    {src: '~/plugins/axios.js',ssr:true},
+    {src:'~/plugins/ctx-ghost.js',ssr:true},
+    {src:'~/plugins/scroller.js',ssr:true},
+    {src:'~/plugins/swiper.js',ssr:true},
+    {src:'~/plugins/highlight.js',ssr:true},
     {src:'~/plugins/baidu.js',ssr:false},
     // {src:'~/plugins/googleAd.js',ssr:false}
   ],
@@ -77,6 +77,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
+    extractCSS: { allChunks: true },
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
